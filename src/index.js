@@ -26,6 +26,76 @@ class Tree{
     
         return node;
     }
+
+    insert(key){
+    let temp = new Node(key);
+
+    if (this.root === null){
+        return temp;
+    }
+
+    let parent = null;
+    let current = this.root;
+
+    while (current !== null){
+        parent = current;
+
+        if (current.data > key){
+            current = current.left
+        } else if (current.data < key){
+            current = current.right
+        } else {
+            return this.root;
+        }
+    }
+
+    if (parent.data > key){
+        parent.left = temp;
+    } else {
+        parent.right = temp;
+    }
+
+    return this.root;
+}
+
+    deleteItem(key, root = this.root){
+        if (root === null) return root;
+
+        if (root.data > key){
+            console.log('Go left')
+            root.left = this.deleteItem(key, root.left);
+        } else if (root.data < key){
+            console.log('Go right')
+            root.right = this.deleteItem(key, root.right);
+        } else {
+            console.log('We got a match')
+            if (root.left === null){
+                return root.right
+            }
+
+            if (root.right === null){
+                return root.left
+            }
+
+            let successor = this.getSuccessor(root);
+            console.log(successor);
+            console.log(root)
+
+            root.data = successor.data;
+            root.right = this.deleteItem(successor.data, root.right);
+        }
+
+        return root;
+    }
+
+    getSuccessor(current){
+        console.log(current)
+        current = current.right;
+        while (current !== null && current.left !== null){
+            current = current.left;
+        }
+        return current;
+    }
 }
 
 let array = [ 4, 7, 3, 1, 9, 12, 45, 78, 8];
