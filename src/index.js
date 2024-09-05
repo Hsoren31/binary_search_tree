@@ -62,13 +62,10 @@ class Tree{
         if (root === null) return root;
 
         if (root.data > key){
-            console.log('Go left')
             root.left = this.deleteItem(key, root.left);
         } else if (root.data < key){
-            console.log('Go right')
             root.right = this.deleteItem(key, root.right);
         } else {
-            console.log('We got a match')
             if (root.left === null){
                 return root.right
             }
@@ -78,9 +75,6 @@ class Tree{
             }
 
             let successor = this.getSuccessor(root);
-            console.log(successor);
-            console.log(root)
-
             root.data = successor.data;
             root.right = this.deleteItem(successor.data, root.right);
         }
@@ -89,12 +83,26 @@ class Tree{
     }
 
     getSuccessor(current){
-        console.log(current)
         current = current.right;
         while (current !== null && current.left !== null){
             current = current.left;
         }
         return current;
+    }
+
+    find(value, root = this.root){
+        console.log(value, root)
+        if (root.data === value){
+            return root;
+        } else if (root === null){
+            return null;
+        }
+
+        if (root.data > value){
+            return this.find(value, root.left)
+        } else if (root.data < value){
+            return this.find(value, root.right)
+        }
     }
 }
 
