@@ -104,9 +104,36 @@ class Tree{
             return this.find(value, root.right)
         }
     }
+
+    levelOrder(callback){
+        if(this.root === null) return;
+        let queue = [this.root];
+
+        if (callback === null){
+            throw new Error('Please provide a callback')
+        }
+
+        while(queue.length !== 0){
+            let current = queue.shift();
+            
+            callback(current);
+
+            if (current.left !== null){
+                queue.push(current.left)
+            }
+            if (current.right !== null){
+                queue.push(current.right)
+            }
+        }
+    }
 }
 
 let array = [ 4, 7, 3, 1, 9, 12, 45, 78, 8];
 
 const test = new Tree(array);
 console.log(test);
+test.levelOrder(print)
+
+function print(node){
+    console.log('Printing', node);
+}
