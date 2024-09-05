@@ -126,14 +126,53 @@ class Tree{
             }
         }
     }
+
+    inOrder(callback, root = this.root){
+        //if root in null return
+        if(callback === null) {
+            throw new Error('Please provide a callback')
+        }
+
+        if(root === null) return;
+        //inorder(root -> left)
+        this.inOrder(callback, root.left)
+        //process root(print or in this case call the callback)
+        callback(root);
+        //inorder(root -> right)
+        this.inOrder(callback, root.right)
+    }
+
+    preOrder(callback, root = this.root){
+        if(callback === null){
+            throw new Error('Please provide a callback')
+        }
+
+        if (root === null) return;
+
+        callback(root);
+        this.preOrder(callback, root.left);
+        this.preOrder(callback, root.right);
+    }
+
+    postOrder(callback, root = this.root){
+        if (callback === null){
+            throw new Error('Please provide a callback')
+        }
+
+        if (root === null) return;
+
+        this.postOrder(callback, root.left)
+        this.postOrder(callback, root.right)
+        callback(root)
+    }
 }
 
-let array = [ 4, 7, 3, 1, 9, 12, 45, 78, 8];
+let array = [4, 7, 3, 1, 9, 12, 45, 78, 8];
 
 const test = new Tree(array);
 console.log(test);
-test.levelOrder(print)
+test.postOrder(testPrint)
 
-function print(node){
-    console.log('Printing', node);
+function testPrint(node){
+    console.log('Printing', node)
 }
