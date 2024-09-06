@@ -91,7 +91,6 @@ class Tree{
     }
 
     find(value, root = this.root){
-        console.log(value, root)
         if (root.data === value){
             return root;
         } else if (root === null){
@@ -165,14 +164,19 @@ class Tree{
         this.postOrder(callback, root.right)
         callback(root)
     }
+
+    height(target, root = this.find(target)){
+        if (root === null) return -1
+
+        const leftHeight = this.height(target, root.left);
+        const rightHeight = this.height(target, root.right);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
 }
 
 let array = [4, 7, 3, 1, 9, 12, 45, 78, 8];
 
 const test = new Tree(array);
-console.log(test);
-test.postOrder(testPrint)
-
-function testPrint(node){
-    console.log('Printing', node)
-}
+console.log(test)
+console.log(test.height(8))
