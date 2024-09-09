@@ -184,11 +184,24 @@ class Tree{
             return this.depth(target, root.right, distance + 1)
         }
     }
+
+    isBalanced(root = this.root){
+        if(root === null) return -1;
+
+        const leftHeight = this.height(root.left.data);
+        const rightHeight = this.height(root.right.data);
+
+        const difference = Math.abs(leftHeight - rightHeight);
+
+        if(difference <= 1){
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 let array = [4, 7, 3, 1, 9, 12, 45, 78, 8];
 
 const test = new Tree(array);
 console.log(test)
-
-console.log(test.depth(9))
