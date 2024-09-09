@@ -28,6 +28,7 @@ class Tree{
     }
 
     insert(key){
+    if(this.find(key) !== null)return;
     let temp = new Node(key);
 
     if (this.root === null){
@@ -209,8 +210,3 @@ class Tree{
         this.root = this.buildTree(values);
     }
 }
-
-let array = [4, 7, 3, 1, 9, 12, 45, 78, 8];
-
-const test = new Tree(array);
-console.log(test);
