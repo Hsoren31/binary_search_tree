@@ -127,17 +127,13 @@ class Tree{
     }
 
     inOrder(callback, root = this.root){
-        //if root in null return
         if(callback === null) {
             throw new Error('Please provide a callback')
         }
 
         if(root === null) return;
-        //inorder(root -> left)
         this.inOrder(callback, root.left)
-        //process root(print or in this case call the callback)
         callback(root);
-        //inorder(root -> right)
         this.inOrder(callback, root.right)
     }
 
@@ -173,10 +169,26 @@ class Tree{
 
         return Math.max(leftHeight, rightHeight) + 1;
     }
+
+    depth(target, root = this.root, distance = 0){
+        if (root === null){
+            return -1
+        }
+        if (root.data === target){
+            return distance;
+        }
+
+        if (root.data > target){
+            return this.depth(target, root.left, distance + 1)
+        } else {
+            return this.depth(target, root.right, distance + 1)
+        }
+    }
 }
 
 let array = [4, 7, 3, 1, 9, 12, 45, 78, 8];
 
 const test = new Tree(array);
 console.log(test)
-console.log(test.height(8))
+
+console.log(test.depth(9))
