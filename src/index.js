@@ -11,18 +11,18 @@ class Node {
 
 class Tree{
     constructor(array){
-        const sortedArray = array.sort((a, b) => a - b);
-        this.root = this.buildTree(sortedArray);
+        this.root = this.buildTree(array);
     }
 
     buildTree(array){    
         if (array.length === 0) return null;
+        const sortedArray = array.sort((a, b) => a - b);
     
-        let mid = Math.floor(array.length / 2)
-        let node = new Node(array[mid]);
+        let mid = Math.floor(sortedArray.length / 2)
+        let node = new Node(sortedArray[mid]);
     
-        node.left = this.buildTree(array.slice(0, mid));
-        node.right = this.buildTree(array.slice(mid + 1));
+        node.left = this.buildTree(sortedArray.slice(0, mid));
+        node.right = this.buildTree(sortedArray.slice(mid + 1));
     
         return node;
     }
@@ -199,9 +199,18 @@ class Tree{
             return false
         }
     }
+
+    rebalance(){
+        const values = []
+        function pushValues(value){
+            values.push(value.data)
+        }
+        this.postOrder(pushValues);
+        this.root = this.buildTree(values);
+    }
 }
 
 let array = [4, 7, 3, 1, 9, 12, 45, 78, 8];
 
 const test = new Tree(array);
-console.log(test)
+console.log(test);
